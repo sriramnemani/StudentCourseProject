@@ -15,7 +15,7 @@ namespace StudCurRegistration
                 $"StudentGender: { studentCurInfo.StudGender}" + "\n" +            
                 $"StudRegAmount: {studentCurInfo.StudRegFee}");
 
-           // var studentCurInfo2 = new studInfo();
+            // var studentCurInfo2 = new studInfo();
            // Console.WriteLine($"StudID: {studentCurInfo2.StudentId},Email: {studentCurInfo2.StudEmailAdd}," +
              //   $" StudentGender: {studentCurInfo2.StudGender}");
             
