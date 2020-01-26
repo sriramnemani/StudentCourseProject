@@ -6,24 +6,19 @@ namespace StudCurRegistration
     {
         static void Main(string[] args)
         {
-           var studentCurInfo = new studInfo();
-           // studentCurInfo.StudentId = 11;
-            studentCurInfo.StudFirstName = "Rama";
-            studentCurInfo.StudLastName = "AR";
-            studentCurInfo.StudGender = "Male";
-            studentCurInfo.StudphNum = 4253194523;
-            studentCurInfo.StudAddress = "Bellevue";
-            studentCurInfo.StudEmailAdd = "ramraj@gmail.com";
-            
-            studInfo.count_studentID = 0;
-            studInfo.StudID_Count();
-            Console.WriteLine($"StudID: {studInfo.count_studentID},Email: {studentCurInfo.StudEmailAdd}");
-            //Console.WriteLine(studInfo.count_studentID);
+           var studentCurInfo =  Registration.createNewStudReg("Rama", "Rama@gmail.com", TypeofGender.Female,
+                regamt: 100);
 
-            // Accessing without any instance of the class 
-            studInfo.StudID_Count();
-            Console.WriteLine($"StudID: {studInfo.count_studentID},Email: {studentCurInfo.StudEmailAdd}");
-            //Console.WriteLine(studInfo.count_studentID);         
+            Console.WriteLine($"StudID: {studentCurInfo.StudentId} " + "\n"+
+                $"StudName: {studentCurInfo.StudFirstName}" + "\n" +
+                $"Email: {studentCurInfo.StudEmailAdd}" + "\n" +
+                $"StudentGender: { studentCurInfo.StudGender}" + "\n" +            
+                $"StudRegAmount: {studentCurInfo.StudRegFee}");
+
+           // var studentCurInfo2 = new studInfo();
+           // Console.WriteLine($"StudID: {studentCurInfo2.StudentId},Email: {studentCurInfo2.StudEmailAdd}," +
+             //   $" StudentGender: {studentCurInfo2.StudGender}");
+            
 
         }
 
