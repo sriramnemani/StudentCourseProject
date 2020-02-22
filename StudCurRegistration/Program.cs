@@ -1,15 +1,23 @@
 ﻿using System;
-
+using System.Data;
+using System.Collections.Generic;
 namespace StudCurRegistration
 {
     class Program
     {
         static void Main(string[] args)
         {
-            var students = new studInfo();       
-        // var studentCurInfo = new studInfo();
+            var students = new studInfo();
+            var scourses = new Courses();
+            var sList = new List<string>();
+            //string CourseName ="";
+            //string sUserInput = "";            
+            //bool validInput = true;
 
-        Console.WriteLine("*********************");
+            //List<string> lines = new List<string>();
+            // var studentCurInfo = new studInfo();
+
+            Console.WriteLine("*********************");
             Console.WriteLine("Welcome to School!");
             while (true)
             {
@@ -18,7 +26,8 @@ namespace StudCurRegistration
                 Console.WriteLine("1. New Student Enrollment");
                 //Console.WriteLine("2. Add Student");
                 Console.WriteLine("2. Remove Student");
-                Console.WriteLine("3. View all Students");
+                Console.WriteLine("3. Get All Students by course");
+                Console.WriteLine("4. View all Students");
                 
                 Console.WriteLine("Select an option: ");
                 var option = Console.ReadLine();
@@ -48,38 +57,61 @@ namespace StudCurRegistration
                         //Read the value asking the enum to parse the string into and then give you the type.
                         var studGender = Enum.Parse<TypeofGender>(Console.ReadLine());
 
-                        // Course Name
-                        Console.WriteLine("Course Name:");
+                        Console.WriteLine("Course Name: ");
                         var courseName = Console.ReadLine();
 
                         Console.WriteLine("Enrollment Fee:");
                         var enrollAmt = Convert.ToDecimal(Console.ReadLine());
-                        
-                        var studentCurInfo = School.createNewStudEnroll(studName,studEmail,courseName,
-                            studGender,enrollAmt);
+
+                        var studentCurInfo = School.createNewStudEnroll(studName, studEmail,
+                            courseName,
+                            studGender, enrollAmt);
                         Console.WriteLine($"StudID: {studentCurInfo.StudentId} " +
                         $" StudName: {studentCurInfo.StudFirstName}" +
                          $" Email: {studentCurInfo.StudEmailAdd}" +
                          $" StudentGender: { studentCurInfo.StudGender}" +
                          $" Create Date: {studentCurInfo.StudStartDate}" +
-                         $" Course Code:{studentCurInfo.CourseCode}" +
-                         $" Course Name:{studentCurInfo.CourseName}" +
                          $" Enrollment Fee: {studentCurInfo.StudEnrollFee:C}");
 
                         Console.WriteLine("Student Enrolled!");
                         break;
 
-                    case "2":                       
+                    case "2":
                         Console.WriteLine("student ID:");
                         var studentId = Convert.ToInt32(Console.ReadLine());
 
                         School.removeStudent(studentId);
 
                         Console.WriteLine("Student Record Deleted!");
-                        break;                       
+                        break;
 
                     case "3":
-                        School.PrintAllstudentdetails();
+                        Console.WriteLine("CourseName:");
+                        var coursename = Console.ReadLine();
+                        try
+                        {
+                            School.GetAllStudentsbycourse(coursename);
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("The Course Name is invalid!");
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine("CourseName is invalid. Please try again!");
+                        }
+                        break;
+
+                    case "4":
+                        try
+                        {
+                            School.PrintAllstudentdetails();
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Something went wrong!");
+                        }
+
                         break;
                     default:
                         Console.WriteLine("Invalid option! Try again!");

@@ -16,9 +16,6 @@ namespace StudCurRegistration
     /// </summary>
     class studInfo
     {
-        // declare static variable field
-        private static int lastStudentId = 0;
-        private static int lastcourcode = 99;
         
         #region properties of Student inforation
         /// <summary>
@@ -35,8 +32,8 @@ namespace StudCurRegistration
         public string StudAddress { get; set; }
         public long  StudphNum { get; set; }
         public decimal StudEnrollFee { get; private set; }
-        public int CourseCode { get; private set; }
-        public string CourseName { get; set; }
+      //  public int CourseCode { get; set; }
+       // public string CourseName { get; set; }
        
         #endregion
 
@@ -45,9 +42,9 @@ namespace StudCurRegistration
         //declare public constructor
         public studInfo()
         {
-            StudentId = lastStudentId++;
+          //  StudentId = lastStudentId++;
             StudStartDate = DateTime.UtcNow;
-            CourseCode = ++lastcourcode;
+            //CourseCode = ++lastcourcode;
         }
         
         #endregion

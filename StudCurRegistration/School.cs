@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-
 namespace StudCurRegistration
 {
-    static class School
+   static class School
     {
-        private static List<studInfo> studList = new List<studInfo>();
-        
+        private static SchoolContext db = new SchoolContext();
         /// <summary>
         /// create a student registration
         /// </summary>
@@ -21,60 +19,99 @@ namespace StudCurRegistration
             string studentName,
             string emailaddress,
             string coursename,
+            
             TypeofGender gender = TypeofGender.Female,
             decimal enrollamt = 0)
         {
             //object Initialization
+
             var studentenroll = new studInfo
             {
                 StudFirstName = studentName,
                 StudEmailAdd = emailaddress,
-                StudGender = gender,
-                CourseName = coursename
+                StudGender = gender
             };
             if (enrollamt > 0)
             {
                 studentenroll.StudEnrollAmt(enrollamt);
             }
-            studList.Add(studentenroll);
+
+            db.Students.Add(studentenroll);
+            db.SaveChanges();
+            createstudentregCourse(studentenroll.StudentId, coursename);
             return studentenroll;
         }
-        
+
         public static void removeStudent(int studId)
         {
-            var studCurInfo = studList.Where(a => a.StudentId == studId).SingleOrDefault ();
-            studList.Remove(studCurInfo);
+            var studCurInfo = db.Students.Where(a => a.StudentId == studId).SingleOrDefault();
+            db.Students.Remove(studCurInfo);
+            db.SaveChanges();
         }
-                
+
+        public static void GetAllStudentsbycourse(string coursename)
+        {
+           var students = from student in db.Students
+                          join cs in db.Courses on student.StudentId equals cs.StudentId
+                          where cs.CourseName == coursename
+                          select student;
+
+            
+            foreach (var a in students)
+            {
+                Console.WriteLine($"StudentID: {a.StudentId}, " +
+                 $"StudentName: {a.StudFirstName}");                  
+            }
+        }
+
         public static void PrintAllstudentdetails()
         {
-            if (studList != null)
+            if (db.Students != null)
             {
-                foreach (var a in studList)
+                var viewlist = db.Students.Join(db.Courses, s => s.StudentId,
+                    c => c.StudentId, (s, c)=> new
+                    {
+                        studnetId= s.StudentId,
+                        studentName = s.StudFirstName,
+                        gender = s.StudGender,
+                        amount = s.StudEnrollFee,
+                        email = s.StudEmailAdd,
+                        courseName = c.CourseName,
+                        courseDate = c.CourseDate,
+                        coursecode = c.CourseCode 
+                        
+                });
+                                             
+                foreach (var a in viewlist)
                 {
-                    Console.WriteLine($"StudentID: {a.StudentId}, " +
-                     $"StudentName: {a.StudFirstName}, " +
-                     $"Fee: {a.StudEnrollFee:C}, " +
-                     $"CourseName: {a.CourseName}," +
-                     $" Course Code:{a.CourseCode}" +
-                     $" CourseDate: {a.StudStartDate}, " +
-                     $"Email: {a.StudEmailAdd} ," +
-                     $"Gender: {a.StudGender}");
-
+                    Console.WriteLine($"StudentID: {a.studnetId}, " +
+                     $"StudentName: {a.studentName}, " +
+                     $"Fee: {a.amount:C}, " +
+                     $"CourseName: {a.courseName}, " +
+                    // $"Course Code: {a.coursecode}, "  +
+                     $"Email: {a.email}, " +
+                     $"Gender: {a.gender}, " +
+                     $"CourseDate: {a.courseDate}");
                 }
             }
-            else 
+            else
             {
                 Console.WriteLine("Student List is Empty");
+
             }
-        }              
-        
+
+        }
+
+        private static void createstudentregCourse(int studid, string coursename)
+        {
+            var courses = new Courses
+            {
+                CourseName = coursename,
+                StudentId = studid,
+                CourseDate = DateTime.UtcNow 
+            };
+            db.Courses.Add(courses);
+            db.SaveChanges();
+        }
     }
-
 }
-
-
- 
-
-        
-
