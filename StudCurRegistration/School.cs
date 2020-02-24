@@ -11,8 +11,7 @@ namespace StudCurRegistration
         /// create a student registration
         /// </summary>
         /// <param name="studName"> Student Name</param>
-        /// <param name="emailaddress">Student Email Address</param>
-        /// <param name="coursename">Course Name</param>
+        /// <param name="emailaddress">Student Email Address</param>   
         /// <param name="enrollamt">Registration /Enrollment Amount</param>
         /// <returns> New Enrollment details of Student</returns>
         public static studInfo createNewStudEnroll(
@@ -51,12 +50,11 @@ namespace StudCurRegistration
 
         public static void GetAllStudentsbycourse(string coursename)
         {
-           var students = from student in db.Students
-                          join cs in db.Courses on student.StudentId equals cs.StudentId
-                          where cs.CourseName == coursename
-                          select student;
+            var students = from student in db.Students
+                           from cs in db.Courses.Where
+                           (cs => cs.CourseName == coursename && student.StudentId == cs.StudentId)
+                           select student;
 
-            
             foreach (var a in students)
             {
                 Console.WriteLine($"StudentID: {a.StudentId}, " +
