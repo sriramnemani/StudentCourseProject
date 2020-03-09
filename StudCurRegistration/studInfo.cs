@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StudCurRegistration
 {
-    enum TypeofGender
+   public enum TypeofGender
     {
         Female,
         Male 
@@ -14,9 +14,8 @@ namespace StudCurRegistration
     /// This represnets a student information
     /// to enroll the course and assignment scores.
     /// </summary>
-    class studInfo
-    {
-        
+   public class studInfo
+    {        
         #region properties of Student inforation
         /// <summary>
         /// unique student ID

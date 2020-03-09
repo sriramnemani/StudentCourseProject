@@ -3,7 +3,7 @@ using System.Data;
 using System.Collections.Generic;
 namespace StudCurRegistration
 {
-    class Program
+   public class Program
     {
         static void Main(string[] args)
         {
@@ -24,10 +24,10 @@ namespace StudCurRegistration
                 Console.WriteLine("*********************");
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. New Student Enrollment");
-                //Console.WriteLine("2. Add Student");
-                Console.WriteLine("2. Remove Student");
-                Console.WriteLine("3. Get All Students by course");
-                Console.WriteLine("4. View all Students");
+                Console.WriteLine("2. Add Course");
+                Console.WriteLine("3. Remove Student");
+                Console.WriteLine("4. Get All Students by course");
+                Console.WriteLine("5. View all Students");
                 
                 Console.WriteLine("Select an option: ");
                 var option = Console.ReadLine();
@@ -44,6 +44,12 @@ namespace StudCurRegistration
                         Console.WriteLine("Student Email Address:");
                         var studEmail = Console.ReadLine();
 
+                        Console.WriteLine("student Address:");
+                        var stuAddress = Console.ReadLine();
+
+                        Console.WriteLine("Student PhoneNumber:");
+                        var studPh = Convert.ToInt64(Console.ReadLine());
+
                         Console.WriteLine("Student Gender:");
                         //Array of string assign to variable
                         var studGen = Enum.GetNames(typeof(TypeofGender));
@@ -57,15 +63,15 @@ namespace StudCurRegistration
                         //Read the value asking the enum to parse the string into and then give you the type.
                         var studGender = Enum.Parse<TypeofGender>(Console.ReadLine());
 
-                        Console.WriteLine("Course Name: ");
-                        var courseName = Console.ReadLine();
+                      //  Console.WriteLine("Course Name: ");
+                      //  var courseName = Console.ReadLine();
 
                         Console.WriteLine("Enrollment Fee:");
                         var enrollAmt = Convert.ToDecimal(Console.ReadLine());
 
-                        var studentCurInfo = School.createNewStudEnroll(studName, studEmail,
-                            courseName,
-                            studGender, enrollAmt);
+                        var studentCurInfo = School.createNewStudEnroll(studName,studEmail,stuAddress,
+                            studPh,studGender                           
+                            , enrollAmt);
                         Console.WriteLine($"StudID: {studentCurInfo.StudentId} " +
                         $" StudName: {studentCurInfo.StudFirstName}" +
                          $" Email: {studentCurInfo.StudEmailAdd}" +
@@ -77,6 +83,19 @@ namespace StudCurRegistration
                         break;
 
                     case "2":
+
+                        Console.WriteLine("student ID:");
+                        var studtId = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("course Name:");
+                        var courname = Console.ReadLine();
+
+                        School.createCourse(studtId,courname);
+
+                        Console.WriteLine("Course created!");
+                        break;
+
+                    case "3":
                         Console.WriteLine("student ID:");
                         var studentId = Convert.ToInt32(Console.ReadLine());
 
@@ -85,7 +104,7 @@ namespace StudCurRegistration
                         Console.WriteLine("Student Record Deleted!");
                         break;
 
-                    case "3":
+                    case "4":
                         Console.WriteLine("CourseName:");
                         var coursename = Console.ReadLine();
                         try
@@ -102,7 +121,7 @@ namespace StudCurRegistration
                         }
                         break;
 
-                    case "4":
+                    case "5":
                         try
                         {
                             School.PrintAllstudentdetails();

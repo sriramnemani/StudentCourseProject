@@ -5,10 +5,21 @@ using System.Text;
 
 namespace StudCurRegistration
 {
-    class SchoolContext : DbContext
+    public class SchoolContext : DbContext
     {
         public DbSet<studInfo> Students { get; set; }
         public DbSet<Courses> Courses { get; set; }
+
+        public SchoolContext()
+        { 
+        }
+
+        public SchoolContext(DbContextOptions<SchoolContext> options)
+        { 
+      
+        }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;

@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 namespace StudCurRegistration
 {
-   static class School
+   public static class School
     {
         private static SchoolContext db = new SchoolContext();
         /// <summary>
@@ -17,8 +17,9 @@ namespace StudCurRegistration
         public static studInfo createNewStudEnroll(
             string studentName,
             string emailaddress,
-            string coursename,
-            
+            string address,
+            long phonenumber,
+           // string coursename,            
             TypeofGender gender = TypeofGender.Female,
             decimal enrollamt = 0)
         {
@@ -28,19 +29,21 @@ namespace StudCurRegistration
             {
                 StudFirstName = studentName,
                 StudEmailAdd = emailaddress,
+                StudAddress = address,
+                StudphNum = phonenumber,
                 StudGender = gender
-            };
-            if (enrollamt > 0)
-            {
-                studentenroll.StudEnrollAmt(enrollamt);
-            }
+            };            
 
             db.Students.Add(studentenroll);
             db.SaveChanges();
-            createstudentregCourse(studentenroll.StudentId, coursename);
+            if (enrollamt > 0)
+            {
+                studentenroll.StudEnrollAmt(enrollamt);
+            }            
+            //createstudentregCourse(studentenroll.StudentId, coursename);
             return studentenroll;
         }
-
+        
         public static void removeStudent(int studId)
         {
             var studCurInfo = db.Students.Where(a => a.StudentId == studId).SingleOrDefault();
@@ -61,6 +64,7 @@ namespace StudCurRegistration
                  $"StudentName: {a.StudFirstName}");                  
             }
         }
+       
 
         public static void PrintAllstudentdetails()
         {
@@ -100,7 +104,12 @@ namespace StudCurRegistration
 
         }
 
-        private static void createstudentregCourse(int studid, string coursename)
+        public static IEnumerable<studInfo> GetAllstudentsByEmailAddress(string emailAddress)
+        { 
+            return db.Students.Where(a => a.StudEmailAdd == emailAddress);
+        }        
+
+        public static Courses createCourse(int studid,string coursename)
         {
             var courses = new Courses
             {
@@ -110,6 +119,20 @@ namespace StudCurRegistration
             };
             db.Courses.Add(courses);
             db.SaveChanges();
+            return courses;
+        }
+
+        public static studInfo GetStudentId(int studentid)
+        {
+            return db.Students.SingleOrDefault(a => a.StudentId == studentid);
+        }
+
+        public static void createStudCourReg(string studentName,string emailaddress,string address,
+                             long phonenumber,TypeofGender gender,decimal enrollamt,string coursename)
+        {
+            createNewStudEnroll(studentName, emailaddress, address, phonenumber, TypeofGender.Male, enrollamt);
+            
+            //createCourse(, coursename);
         }
     }
 }

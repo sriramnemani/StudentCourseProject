@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StudCurRegistration
 {
-    class Courses
+   public class Courses
     {
         //private static int lastcourcode = 99;
         public int CourseCode { get; set; }

@@ -1,0 +1,64 @@
+﻿@model StudCurRegistration.studInfo
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>studInfo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StudentId" />            
+            <div class="form-group">
+                <label asp-for="StudFirstName" class="control-label"></label>
+                <input asp-for="StudFirstName" class="form-control" />
+                <span asp-validation-for="StudFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudStartDate" class="control-label"></label>
+                <input asp-for="StudStartDate" class="form-control" />
+                <span asp-validation-for="StudStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudGender" class="control-label"></label>
+                <select asp-for="StudGender" class="form-control"></select>
+                <span asp-validation-for="StudGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudEmailAdd" class="control-label"></label>
+                <input asp-for="StudEmailAdd" class="form-control" />
+                <span asp-validation-for="StudEmailAdd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudAddress" class="control-label"></label>
+                <input asp-for="StudAddress" class="form-control" />
+                <span asp-validation-for="StudAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudphNum" class="control-label"></label>
+                <input asp-for="StudphNum" class="form-control" />
+                <span asp-validation-for="StudphNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudEnrollFee" class="control-label"></label>
+                <input asp-for="StudEnrollFee" class="form-control" />
+                <span asp-validation-for="StudEnrollFee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
